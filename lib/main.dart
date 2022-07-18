@@ -15,17 +15,74 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = 'Tech For Good';
+    Colors.amberAccent;
+
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 139, 184, 71),
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 57, 128, 55),
+          centerTitle: true,
           title: const Text(appTitle),
         ),
+        drawer: const NavigationDrawer(),
         body: const MyCustomForm(),
       ),
     );
   }
 }
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              buildHeader(context),
+              buildMenuItems(context,)
+            ],
+          ),
+        ),
+      );
+}
+Widget buildHeader(BuildContext context) => Container(
+  color: const Color.fromARGB(255, 139, 184, 71),
+  padding: EdgeInsets.only(
+    top: MediaQuery.of(context).padding.top,
+  ),
+  child: Column(
+    children: const [
+      CircleAvatar(
+        radius: 52,
+        backgroundImage: NetworkImage(
+          'https://media.discordapp.net/attachments/758708402938576897/998587392468463697/zenith_logo_without_bg.png'
+        ),
+      ),
+      SizedBox(height: 12,),
+      Text(
+        'Futurz Club',
+        style: TextStyle(fontSize: 28, color: Colors.white70),
+      ),
+      Text(
+        'futurz.afgji@gmail.com',
+        style: TextStyle(fontSize: 16, color: Colors.white24),
+      )
+    ],
+  ),
+);
+
+Widget buildMenuItems(BuildContext context) => Column(
+      children: [
+        ListTile(
+          title: const Text(''),
+          onTap: () {},
+        ),
+      ],
+    );
 
 class MyCustomForm extends StatelessWidget {
   const MyCustomForm({super.key});
@@ -33,7 +90,6 @@ class MyCustomForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -60,7 +116,7 @@ class MyCustomForm extends StatelessWidget {
           child: TextFormField(
             decoration: const InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'Enter your Admission Number',
+              labelText: 'Enter your Message',
             ),
             controller: myController3,
           ),
@@ -75,11 +131,9 @@ class MyCustomForm extends StatelessWidget {
               Text(myController1.text),
               Text(myController2.text),
               Text(myController3.text),
+              resultantFile,
             });
-            print('Response status: ${response.statusCode}');
-            print('Response body: ${response.body}');
-
-            print(await http.read(Uri.parse('https://example.com/foobar.txt')));
+            ('Response status: ${response.statusCode}');
           },
           child: const Text(insideText),
         ),
