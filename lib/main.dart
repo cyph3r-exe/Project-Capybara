@@ -1,4 +1,5 @@
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -100,6 +101,7 @@ Widget buildMenuItems(BuildContext context) => Container(
                 color: Colors.black.withOpacity(0.6)),
           ),
           Container(
+            alignment: Alignment.bottomCenter,
             child: Column(
               children: const [
                 CircleAvatar(
@@ -204,7 +206,7 @@ class MyCustomForm extends StatelessWidget {
       const Padding(
           padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
           child: Text('Developed by',
-          textAlign: TextAlign.start,
+          textAlign: TextAlign.end,
         style: TextStyle(
           fontSize: 10,
           fontFamily: 'Roboto',
@@ -216,7 +218,7 @@ class MyCustomForm extends StatelessWidget {
       const Padding(
           padding: EdgeInsets.symmetric(horizontal: 2, vertical: 4),
           child: Text('Futurz Club AFGJI',
-          textAlign: TextAlign.start,
+          textAlign: TextAlign.end,
           style: TextStyle(
           fontSize: 12,
           fontFamily: 'Roboto',
