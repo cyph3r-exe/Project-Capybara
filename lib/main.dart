@@ -1,5 +1,5 @@
+
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -180,12 +180,11 @@ class MyCustomForm extends StatelessWidget {
             final result = await FilePicker.platform.pickFiles();
             if (result == null) return;
             final resultantFile = result.files.first;
-            var url = Uri.parse('https://example.com/whatsit/create');
+            var url = Uri.parse('https://rocky-garden-39346.herokuapp.com/');
             var response = await http.post(url, body: {
-              Text(myController1.text),
-              Text(myController2.text),
-              Text(myController3.text),
-              resultantFile,
+              'name': Text(myController1.text),
+              'class': Text(myController2.text),
+              'message': Text(myController3.text),
             });
             ('Response status: ${response.statusCode}');
           },
