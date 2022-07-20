@@ -1,7 +1,8 @@
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
+import 'dart:io' as io;
 
 void main() => runApp(const MyApp());
 
@@ -9,6 +10,7 @@ final myController1 = TextEditingController();
 final myController2 = TextEditingController();
 final myController3 = TextEditingController();
 const insideText = 'Pick File';
+final ImagePicker _picker = ImagePicker();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -124,109 +126,111 @@ class MyCustomForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [
-                0.1,
-                0.4,
-                0.6,
-                0.9,
-              ],
-              colors: [
-                Color.fromARGB(255, 89, 255, 213),
-                Color.fromARGB(255, 113, 255, 137),
-                Color.fromARGB(255, 89, 255, 103),
-                Colors.teal,
-              ],
-            )
-          ),
+          gradient: LinearGradient(
+        begin: Alignment.topRight,
+        end: Alignment.bottomLeft,
+        stops: [
+          0.1,
+          0.4,
+          0.6,
+          0.9,
+        ],
+        colors: [
+          Color.fromARGB(255, 89, 255, 213),
+          Color.fromARGB(255, 113, 255, 137),
+          Color.fromARGB(255, 89, 255, 103),
+          Colors.teal,
+        ],
+      )),
       child: Column(
         children: [
-        
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Enter your Full Name',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Enter your Full Name',
+              ),
+              controller: myController1,
             ),
-            controller: myController1,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Enter your Class and Section',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Enter your Class and Section',
+              ),
+              controller: myController2,
             ),
-            controller: myController2,
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Enter your Message',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Enter your Message',
+              ),
+              controller: myController3,
             ),
-            controller: myController3,
           ),
-        ),
-        
-        ElevatedButton(
-          onPressed: () async {
-            final result = await FilePicker.platform.pickFiles();
-            if (result == null) return;
-            final resultantFile = result.files.first;
-            var url = Uri.parse('https://rocky-garden-39346.herokuapp.com/');
-            var response = await http.post(url, body: {
-              'name': Text(myController1.text),
-              'class': Text(myController2.text),
-              'message': Text(myController3.text),
-            });
-            ('Response status: ${response.statusCode}');
-          },
-          child: const Text(insideText),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-          child: Text('“Progress is impossible without change, and those who cannot change their minds cannot change anything.”',
-          textAlign: TextAlign.start,
-        style: TextStyle(
-          fontSize: 30,
-          fontFamily: 'Roboto',
-          fontStyle: FontStyle.italic,
-          color: Color.fromARGB(153, 46, 44, 44)
+          ElevatedButton(
+            onPressed: () async {
+              final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+              if (image == null) return ;
+              
+              final bytes = await io.File(image.path).readAsBytes();
+              String img64 = base64Encode(bytes);
+              
+              var url =
+                  Uri.parse('https://rocky-garden-39346.herokuapp.com/upload');
+              var response = await http.post(url, body: {
+                'student_name': myController1.text,
+                'student_class': myController2.text,
+                'student_quote': myController3.text,
+                'image_data': img64
+              });
+              ('Response status: ${response.statusCode}');
+            },
+            child: const Text(insideText),
           ),
-        ),
-      ),
-      const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
-          child: Text('Developed by',
-          textAlign: TextAlign.end,
-        style: TextStyle(
-          fontSize: 10,
-          fontFamily: 'Roboto',
-          fontStyle: FontStyle.italic,
-          color: Color.fromARGB(153, 46, 44, 44)
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            child: Text(
+              '“Progress is impossible without change, and those who cannot change their minds cannot change anything.”',
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                  fontSize: 30,
+                  fontFamily: 'Roboto',
+                  fontStyle: FontStyle.italic,
+                  color: Color.fromARGB(153, 46, 44, 44)),
+            ),
           ),
-        ),
-      ),
-      const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-          child: Text('Futurz Club AFGJI',
-          textAlign: TextAlign.end,
-          style: TextStyle(
-          fontSize: 12,
-          fontFamily: 'Roboto',
-          fontWeight: FontWeight.bold,
-          color: Color.fromARGB(153, 46, 44, 44)
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+            child: Text(
+              'Developed by',
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                  fontSize: 10,
+                  fontFamily: 'Roboto',
+                  fontStyle: FontStyle.italic,
+                  color: Color.fromARGB(153, 46, 44, 44)),
+            ),
           ),
-        ),
-      ),
-      ],
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+            child: Text(
+              'Futurz Club AFGJI',
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(153, 46, 44, 44)),
+            ),
+          ),
+        ],
       ),
     );
   }

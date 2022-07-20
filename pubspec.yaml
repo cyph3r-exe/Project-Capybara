@@ -30,8 +30,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  #pick and read files 
-  file_picker: ^4.1.3
+  #pick and read image files 
+  image_picker: ^0.8.5+3
 
   open_file: ^3.0.1
   #save cache 
