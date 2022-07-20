@@ -57,6 +57,21 @@ class NavigationDrawer extends StatelessWidget {
         ),
       );
 }
+void _buildAlert(BuildContext context) {
+  final alert = AlertDialog(
+    title: const Text('Successful Upload'),
+    content: const Text('Thank you for being a part of #TechForGood'),
+    actions: [
+      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Ok'),)
+    ],
+  );
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 Widget buildHeader(BuildContext context) => Container(
       color: const Color.fromARGB(224, 92, 206, 140),
@@ -176,9 +191,10 @@ class MyCustomForm extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () async {
-              final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-              if (image == null) return ;
-              
+              final XFile? image =
+                  await _picker.pickImage(source: ImageSource.gallery);
+              if (image == null) return;
+
               final bytes = await io.File(image.path).readAsBytes();
               String img64 = base64Encode(bytes);
 
@@ -190,7 +206,7 @@ class MyCustomForm extends StatelessWidget {
                 'student_quote': myController3.text,
                 'image_data': img64
               });
-              print('Response status: ${response.statusCode}');
+              if (response.statusCode == 200) return _buildAlert(context);
             },
             child: const Text(insideText),
           ),
