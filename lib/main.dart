@@ -181,7 +181,7 @@ class MyCustomForm extends StatelessWidget {
               
               final bytes = await io.File(image.path).readAsBytes();
               String img64 = base64Encode(bytes);
-              
+
               var url =
                   Uri.parse('https://rocky-garden-39346.herokuapp.com/upload');
               var response = await http.post(url, body: {
@@ -190,7 +190,7 @@ class MyCustomForm extends StatelessWidget {
                 'student_quote': myController3.text,
                 'image_data': img64
               });
-              ('Response status: ${response.statusCode}');
+              print('Response status: ${response.statusCode}');
             },
             child: const Text(insideText),
           ),
