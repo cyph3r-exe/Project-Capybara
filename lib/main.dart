@@ -18,10 +18,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const appTitle = '#TechForGood';
-    const TextStyle(
-      fontStyle: FontStyle.italic,
-      fontSize: 24,
-    );
 
     return MaterialApp(
       title: appTitle,
