@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:io' as io;
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color.fromARGB(255, 139, 184, 71),
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 57, 128, 55),
+          backgroundColor: const Color.fromARGB(255, 91, 214, 143),
           centerTitle: true,
           title: const Text(appTitle),
         ),
@@ -77,7 +78,8 @@ Widget buildHeader(BuildContext context) => Container(
       child: Column(
         children: const [
           CircleAvatar(
-            radius: 50,
+            radius: 60,
+            backgroundColor: Color.fromARGB(255, 91, 214, 143),
             backgroundImage: NetworkImage(
                 'https://media.discordapp.net/attachments/758708402938576897/998587392468463697/zenith_logo_without_bg.png'),
           ),
@@ -88,12 +90,16 @@ Widget buildHeader(BuildContext context) => Container(
             'Futurz Club',
             style: TextStyle(
                 fontSize: 28,
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontWeight: FontWeight.bold),
           ),
           Text(
             'futurz.afgji@gmail.com',
-            style: TextStyle(fontSize: 16, color: Colors.white70),
+            style: TextStyle(fontSize: 16, color: Color.fromARGB(179, 0, 0, 0)),
+          ),
+          Text(
+            'www.z3nith.tech',
+            style: TextStyle(fontSize: 16, color: Color.fromARGB(179, 0, 0, 0)),
           )
         ],
       ),
@@ -101,18 +107,17 @@ Widget buildHeader(BuildContext context) => Container(
 
 Widget buildMenuItems(BuildContext context) => Container(
       color: Colors.white,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Column(
         children: [
           Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            "Futurz Club was founded with the aim of igniting innovation and creating technology for the betterment of society. #TechForGood is such an initiative where we created an app to discourage the use of Single-Use Plastic. Fill in your details and upload a picture showing that you're not using Single Use plastic and win a chance to get featured on our website.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontFamily: 'Arial',
-                fontStyle: FontStyle.italic,
-                fontSize: 20,
+              style: GoogleFonts.roboto(
+              fontStyle: FontStyle.italic,
+              fontSize: 19.25,
                 color: Colors.black.withOpacity(0.6)),
-          ),
+            ),
           Container(
             alignment: Alignment.bottomCenter,
             child: Column(
@@ -206,16 +211,15 @@ class MyCustomForm extends StatelessWidget {
             },
             child: const Text(insideText),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
             child: Text(
               '“Progress is impossible without change, and those who cannot change their minds cannot change anything.”',
               textAlign: TextAlign.start,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'Roboto',
+              style: GoogleFonts.caveat(
+                  fontSize: 42,
                   fontStyle: FontStyle.italic,
-                  color: Color.fromARGB(153, 46, 44, 44)),
+                  color: const Color.fromARGB(153, 46, 44, 44)),
             ),
           ),
           const Padding(
@@ -230,18 +234,17 @@ class MyCustomForm extends StatelessWidget {
                   color: Color.fromARGB(153, 46, 44, 44)),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+           const Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 2, vertical: 4),
             child: Text(
               'Futurz Club AFGJI',
               textAlign: TextAlign.end,
               style: TextStyle(
-                  fontSize: 12,
-                  fontFamily: 'Roboto',
+                fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(153, 46, 44, 44)),
+                  color:  Color.fromARGB(153, 46, 44, 44)),
+              ),
             ),
-          ),
         ],
       ),
     );
